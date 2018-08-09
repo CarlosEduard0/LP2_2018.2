@@ -10,7 +10,7 @@ public class Celular {
     }
 
     public void recarga(int valor) {
-        this.saldo += valor;
+        this.setSaldo(this.getSaldo() + valor);
     }
 
     public void gastar(int valor) {

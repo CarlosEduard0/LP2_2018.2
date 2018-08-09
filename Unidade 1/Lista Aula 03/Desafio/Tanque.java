@@ -16,7 +16,10 @@ public class Tanque {
     }
 
     public void setCapacidadeUtilizada(int capacidadeUtilizada) {
-        if()
+        if(capacidadeUtilizada > this.getCapacidade()) {
+            System.out.println("setCapacidadeUtilizada foi chamado com um valor superior a capacidade: " + capacidadeUtilizada);
+            return;
+        }
         this.capacidadeUtilizada = capacidadeUtilizada;
     }
 }

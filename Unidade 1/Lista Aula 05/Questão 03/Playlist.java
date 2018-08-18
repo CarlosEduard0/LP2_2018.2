@@ -17,14 +17,18 @@ public class Playlist {
     }
 
     public void listFiles() {
-        for(int i = 0; i < this.songs.size(); i++) {
+        for (int i = 0; i < this.songs.size(); i++) {
             System.out.println(i + " - " + this.songs.get(i));
         }
     }
 
-    public void playAll() {}
+    public void playAll() {
+    }
 
-    public void playFile(String song) {}
+    public void playFile(String song) {
+        SoundEngine engine = new SoundEngine();
+        engine.playCompletely(song);
+    }
 
     public void removeFile(int index) {
         this.songs.remove(index);

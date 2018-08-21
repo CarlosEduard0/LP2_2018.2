@@ -23,6 +23,9 @@ public class Playlist {
     }
 
     public void playAll() {
+        for(String song : songs) {
+            playFile(song);
+        }
     }
 
     public void playFile(String song) {

@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=
+comment0.target=CanvasDemo()
+comment0.text=\n\ Create\ a\ CanvasDemo\ object.\n\ Creates\ a\ fresh\ canvas\ and\ makes\ it\ visible.\n
+comment1.params=
+comment1.target=void\ drawDemo()
+comment1.text=\n\ Demonstrate\ some\ of\ the\ drawing\ operations\ that\ are\n\ available\ on\ a\ Canvas\ object.\n
+numComments=2

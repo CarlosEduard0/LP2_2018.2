@@ -4,12 +4,11 @@ import java.awt.Rectangle;
 
 /**
  * An illustration of the methods of the Canvas class.
- * 
+ *
  * @author Michael Kolling and David J. Barnes
  * @version 2010.11.30
  */
-public class CanvasDemo
-{
+public class CanvasDemo {
     private Canvas myCanvas;
     private static final int WIDTH = 600;
     private static final int HEIGHT = 500;
@@ -18,18 +17,16 @@ public class CanvasDemo
      * Create a CanvasDemo object.
      * Creates a fresh canvas and makes it visible.
      */
-    public CanvasDemo()
-    {
+    public CanvasDemo() {
         myCanvas = new Canvas("Canvas Demo", WIDTH, HEIGHT);
         myCanvas.setVisible(true);
     }
-    
+
     /**
      * Demonstrate some of the drawing operations that are
      * available on a Canvas object.
      */
-    public void drawDemo()
-    {
+    public void drawDemo() {
         myCanvas.setFont(new Font("helvetica", Font.BOLD, 14));
         myCanvas.setForegroundColor(Color.red);
 
@@ -59,7 +56,7 @@ public class CanvasDemo
         Rectangle rect = new Rectangle(xPos, 150, 30, 20);
 
         // move the rectangle across the screen
-        for(int i = 0; i < 200; i ++) {
+        for (int i = 0; i < 200; i++) {
             myCanvas.draw(rect);
             myCanvas.wait(10);
             myCanvas.eraseOutline(rect);

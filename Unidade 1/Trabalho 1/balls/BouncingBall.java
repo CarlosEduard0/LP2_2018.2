@@ -6,18 +6,16 @@ import java.awt.geom.*;
  * has the ability to move. Details of movement are determined by the ball itself. It
  * will fall downwards, accelerating with time due to the effect of gravity, and bounce
  * upward again when hitting the ground.
- *
+ * <p>
  * This movement can be initiated by repeated calls to the "move" method.
- * 
+ *
  * @author Bruce Quig
  * @author Michael Kolling (mik)
  * @author David J. Barnes
- *
  * @version 2010.11.30
  */
 
-public class BouncingBall
-{
+public class BouncingBall {
     private static final int GRAVITY = 3;  // effect of gravity
 
     private int ballDegradation = 2;
@@ -33,16 +31,15 @@ public class BouncingBall
     /**
      * Constructor for objects of class BouncingBall
      *
-     * @param xPos  the horizontal coordinate of the ball
-     * @param yPos  the vertical coordinate of the ball
+     * @param xPos          the horizontal coordinate of the ball
+     * @param yPos          the vertical coordinate of the ball
      * @param ballDiameter  the diameter (in pixels) of the ball
-     * @param ballColor  the color of the ball
-     * @param groundPos  the position of the ground (where the wall will bounce)
-     * @param drawingCanvas  the canvas to draw this ball on
+     * @param ballColor     the color of the ball
+     * @param groundPos     the position of the ground (where the wall will bounce)
+     * @param drawingCanvas the canvas to draw this ball on
      */
     public BouncingBall(int xPos, int yPos, int ballDiameter, Color ballColor,
-                        int groundPos, Canvas drawingCanvas)
-    {
+                        int groundPos, Canvas drawingCanvas) {
         xPosition = xPos;
         yPosition = yPos;
         color = ballColor;
@@ -54,8 +51,7 @@ public class BouncingBall
     /**
      * Draw this ball at its current position onto the canvas.
      */
-    public void draw()
-    {
+    void draw() {
         canvas.setForegroundColor(color);
         canvas.fillCircle(xPosition, yPosition, diameter);
     }
@@ -63,49 +59,47 @@ public class BouncingBall
     /**
      * Erase this ball at its current position.
      */
-    public void erase()
-    {
+    void erase() {
         canvas.eraseCircle(xPosition, yPosition, diameter);
-    }    
+    }
 
     /**
      * Move this ball according to its position and speed and redraw.
      */
-    public void move()
-    {
+    void move() {
         // remove from canvas at the current position
         erase();
-            
+
         // compute new position
         ySpeed += GRAVITY;
         yPosition += ySpeed;
-        xPosition +=2;
+        xPosition += 2;
 
         // check if it has hit the ground
-        if(yPosition >= (groundPosition - diameter) && ySpeed > 0) {
-            yPosition = (int)(groundPosition - diameter);
-            ySpeed = -ySpeed + ballDegradation; 
+        if (yPosition >= (groundPosition - diameter) && ySpeed > 0) {
+            yPosition = (int) (groundPosition - diameter);
+            ySpeed = -ySpeed + ballDegradation;
         }
 
         // draw again at new position
         draw();
-    }    
+    }
 
     /**
      * Get the horizontal position of this ball
+     *
      * @return the horizontal position of this ball
      */
-    public int getXPosition()
-    {
+    int getXPosition() {
         return xPosition;
     }
 
     /**
      * Get the vertical position of this ball
+     *
      * @return the vertical position of this ball
      */
-    public int getYPosition()
-    {
+    public int getYPosition() {
         return yPosition;
     }
 }

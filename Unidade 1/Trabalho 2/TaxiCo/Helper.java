@@ -35,7 +35,7 @@ public class Helper
 	public void testBook()
 	{
 		setUp();
-		Taxi taxi1 = (Taxi) taxiCo1.lookup("Car #1");		
+		Taxi taxi1 = (Taxi) taxiCo1.lookup("Car #1");
 		taxi1.book("HIPER");
 		if ("HIPER".equalsIgnoreCase(taxi1.getDestination()) ) {
 			System.out.println("Funcionou");
@@ -59,6 +59,16 @@ public class Helper
 		}
 	}
 
+    public void testCatchTaxi() {
+        Vehicle vehicle = this.taxiCo1.catchTaxi("Canterbury West");
+        if(vehicle != null) {
+            System.out.println("Veículo encontrado");
+            System.out.println(vehicle.getStatus());
+        } else {
+            System.out.println("Não foi encontrado nenhum carro");
+        }
+    }
+
 	public static void main(String[] args) {
 		Helper helper = new Helper();
 		System.out.println("Primeiro teste");
@@ -66,6 +76,9 @@ public class Helper
 		
 		System.out.println("Segundo teste");
 		helper.testArrived();
+
+        System.out.println("Terceiro teste");
+        helper.testCatchTaxi();
 	}
 }
 

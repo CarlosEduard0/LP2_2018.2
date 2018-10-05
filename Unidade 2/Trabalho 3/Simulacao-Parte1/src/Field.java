@@ -14,7 +14,7 @@ public class Field {
     // The depth and width of the field.
     private int depth, width;
     // Storage for the animals.
-    private Object[][] fields;
+    private Object[][] field;
 
     /**
      * Represent a field of the given dimensions.
@@ -24,7 +24,7 @@ public class Field {
     public Field(int depth, int width) {
         setDepth(depth);
         setWidth(width);
-        setFields(new Object[getDepth()][getWidth()]);
+        setField(new Object[getDepth()][getWidth()]);
     }
 
     /**
@@ -123,7 +123,7 @@ public class Field {
      * @param location Where to place the animal.
      */
     public void place(Object value, Location location) {
-        getFields()[location.getRow()][location.getCol()] = value;
+        getField()[location.getRow()][location.getCol()] = value;
     }
 
     /**
@@ -132,7 +132,7 @@ public class Field {
      * @return The object at the given location, or null if there is none.
      */
     public Object getObjectAt(Location location) {
-        return getFields()[location.getRow()][location.getCol()];
+        return getField()[location.getRow()][location.getCol()];
     }
 
     /**
@@ -160,14 +160,14 @@ public class Field {
     }
 
     /**
-     * Return the fields
-     * @return The fields
+     * Return the field
+     * @return The field
      */
-    public Object[][] getFields() {
-        return fields;
+    public Object[][] getField() {
+        return field;
     }
 
-    public void setFields(Object[][] fields) {
-        this.fields = fields;
+    public void setField(Object[][] field) {
+        this.field = field;
     }
 }

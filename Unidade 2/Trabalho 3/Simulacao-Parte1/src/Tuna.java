@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class Tuna extends Fish {
 
-    // Characteristics shared by all tunas (static fields).
+    // Characteristics shared by all tunas (static oceans).
 
     // The age at which a tuna can start to breed.
     private static final int BREEDING_AGE = 5;
@@ -23,7 +23,7 @@ public class Tuna extends Fish {
     // A shared random number generator to control breeding.
     private static final Random rand = new Random();
 
-    // Individual characteristics (instance fields).
+    // Individual characteristics (instance oceans).
 
     // The tuna age.
     private int age;
@@ -33,11 +33,11 @@ public class Tuna extends Fish {
      * zero (a new born) or with a random age.
      *
      * @param randomAge If true, the tuna will have a random age.
-     * @param field The field currently occupied.
-     * @param location The location within the field.
+     * @param ocean The ocean currently occupied.
+     * @param location The location within the ocean.
      */
-    public Tuna(boolean randomAge, Field field, Location location) {
-        super(field, location);
+    public Tuna(boolean randomAge, Ocean ocean, Location location) {
+        super(ocean, location);
         setAge(0);
         if(randomAge) {
             setAge(rand.nextInt(MAX_AGE));
@@ -54,12 +54,12 @@ public class Tuna extends Fish {
      * @param newTunas A list to add newly born rabbits to.
      */
     private void giveBirth(List<Fish> newTunas) {
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
+        Ocean ocean = getOcean();
+        List<Location> free = ocean.getFreeAdjacentLocations(getLocation());
         int births = breed();
         for(int i = 0; i < births && free.size() > 0; i++) {
             Location loc = free.remove(0);
-            Tuna young = new Tuna(false, field, loc);
+            Tuna young = new Tuna(false, ocean, loc);
             newTunas.add(young);
         }
     }

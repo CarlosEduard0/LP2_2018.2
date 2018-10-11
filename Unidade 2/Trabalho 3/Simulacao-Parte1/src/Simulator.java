@@ -33,13 +33,6 @@ public class Simulator {
     // A graphical view of the simulation.
     private SimulatorView simView;
 
-
-
-    public static void main(String[] args) {
-        Simulator sim = new Simulator(50, 60);
-        sim.run(1000);
-    }
-
     /**
      * Construct a simulation ocean with default size.
      */
@@ -71,6 +64,25 @@ public class Simulator {
 
         // Setup a valid starting point.
         reset();
+    }
+
+    /**
+     * Run the simulation from its current state for a reasonably long period,
+     * e.g. 500 steps.
+     */
+    public void runLongSimulation() {
+        simulate(500);
+    }
+
+    /**
+     * Run the simulation from its current state for the given number of steps.
+     * Stop before the given number of steps if it ceases to be viable.
+     * @param numSteps The number of steps to run for.
+     */
+    public void simulate(int numSteps) {
+        for(int step = 1; step <= numSteps && getSimView().isViable(getOcean()); step++) {
+            simulateOneStep();
+        }
     }
 
     /**
@@ -132,12 +144,6 @@ public class Simulator {
                 // else leave the location empty.
             }
         }
-    }
-
-    public void run(int steps) {
-        // put the simulation main loop here
-
-        simView.showStatus(0, ocean);
     }
 
     public List<Fish> getFishes() {

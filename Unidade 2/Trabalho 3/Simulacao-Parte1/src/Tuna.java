@@ -8,9 +8,10 @@ import java.util.Random;
  *
  * @author Richard Jones and Michael Kolling
  */
+// TODO Implementar para tuna comer a sardine
 public class Tuna extends Fish {
 
-    // Characteristics shared by all tunas (static oceans).
+    // Characteristics shared by all tunas (static fields).
 
     // The age at which a tuna can start to breed.
     private static final int BREEDING_AGE = 5;
@@ -23,7 +24,7 @@ public class Tuna extends Fish {
     // A shared random number generator to control breeding.
     private static final Random rand = new Random();
 
-    // Individual characteristics (instance oceans).
+    // Individual characteristics (instance fields).
 
     // The tuna age.
     private int age;
@@ -46,6 +47,7 @@ public class Tuna extends Fish {
 
     @Override
     public void act(List<Fish> newFishes) {
+        // TODO
     }
 
     /**

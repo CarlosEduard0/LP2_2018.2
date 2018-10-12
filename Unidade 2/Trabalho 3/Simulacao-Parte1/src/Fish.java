@@ -55,7 +55,7 @@ public abstract class Fish {
         setAlive(false);
         if(location != null) {
             getOcean().clear(location);
-            setLocation(null);
+            location = null;
             setOcean(null);
         }
     }

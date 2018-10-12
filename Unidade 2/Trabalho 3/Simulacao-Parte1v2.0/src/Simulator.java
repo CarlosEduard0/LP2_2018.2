@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * A simple predator-prey simulator, based on a rectangular ocean
- * containing tunas, sharks and sardines.
+ * containing tunas and sardines.
  *
  * @author David J. Barnes and Michael Kolling
  * @version 2008.03.30
@@ -19,19 +19,19 @@ public class Simulator {
     private static final int DEFAULT_HEIGHT = 50;
     // The probability that a tuna will be created in any given grid position.
     private static final double TUNA_CREATION_PROBABILITY = 0.02;
-    // The probability that a shark will be created in any given grid position.
-    private static final double SHARK_CREATION_PROBABILITY = 0.06;
-    // The probability that a sardine will be created in any given grid position.
-    private static final double SARDINE_CREATION_PROBABILITY = 0.02;
+    // The probability that a sardines will be created in any given grid position.
+    private static final double SARDINE_CREATION_PROBABILITY = 0.08;
+    // The probability that a sharks will be created in any given grid position.
+    private static final double SHARK_CREATION_PROBABILITY = 0.01;
 
-    // List of animals in the ocean.
-    private List<Fish> fishes;
+    // List of actors in the ocean.
+    private List<Actor> actors;
     // The current state of the ocean.
     private Ocean ocean;
     // The current step of the simulation.
     private int step;
     // A graphical view of the simulation.
-    private SimulatorView simView;
+    private SimulatorView view;
 
     /**
      * Construct a simulation ocean with default size.
@@ -43,26 +43,25 @@ public class Simulator {
     /**
      * Create a simulation ocean with the given size.
      *
-     * @param height Height of the ocean. Must be greater than zero.
+     * @param height Depth of the ocean. Must be greater than zero.
      * @param width  Width of the ocean. Must be greater than zero.
      */
     public Simulator(int height, int width) {
         if (width <= 0 || height <= 0) {
             System.out.println("The dimensions must be greater than zero.");
             System.out.println("Using default values.");
-            ;
             height = DEFAULT_HEIGHT;
             width = DEFAULT_WIDTH;
         }
 
-        setFishes(new ArrayList<Fish>());
-        setOcean(new Ocean(height, width));
+        actors = new ArrayList<Actor>();
+        ocean = new Ocean(height, width);
 
         // Create a view of the state of each location in the ocean.
-        setSimView(new SimulatorView(height, width));
-        getSimView().setColor(Tuna.class, Color.blue);
-        getSimView().setColor(Sardine.class, Color.gray);
-        getSimView().setColor(Shark.class, Color.red);
+        view = new SimulatorView(height, width);
+        view.setColor(Sardine.class, Color.orange);
+        view.setColor(Tuna.class, Color.blue);
+        view.setColor(Shark.class, Color.red);
 
         // Setup a valid starting point.
         reset();
@@ -83,7 +82,7 @@ public class Simulator {
      * @param numSteps The number of steps to run for.
      */
     public void simulate(int numSteps) {
-        for (int step = 1; step <= numSteps && getSimView().isViable(getOcean()); step++) {
+        for (int step = 1; step <= numSteps && view.isViable(ocean); step++) {
             simulateOneStep();
             try {
                 Thread.sleep(20);
@@ -95,94 +94,64 @@ public class Simulator {
 
     /**
      * Run the simulation from its current state for a single step.
-     * Iterate over the whole field updating the state of each
-     * tuna, sardine and shark.
+     * Iterate over the whole ocean updating the state of each
+     * tuna and sardine.
      */
     public void simulateOneStep() {
-        setStep(getStep() + 1);
+        step++;
 
-        // Provide space for newborn fishes.
-        List<Fish> newFishes = new ArrayList<>();
-        // Let all fishes act.
-        for (Iterator<Fish> it = getFishes().iterator(); it.hasNext(); ) {
-            Fish fish = it.next();
-            fish.act(newFishes);
-            if (!fish.isAlive()) {
+        // Provide space for newborn actors.
+        List<Actor> newActors = new ArrayList<Actor>();
+        // Let all rabbits act.
+        for (Iterator<Actor> it = actors.iterator(); it.hasNext(); ) {
+            Actor fish = it.next();
+            fish.act(newActors);
+            if (!fish.isActive()) {
                 it.remove();
             }
         }
 
-        // Add the newly born tuna, sardine and shark to the main lists.
-        getFishes().addAll(newFishes);
-        getSimView().showStatus(getStep(), getOcean());
+        // Add the newly born foxes and rabbits to the main lists.
+        actors.addAll(newActors);
+
+        view.showStatus(step, ocean);
     }
 
     /**
      * Reset the simulation to a starting position.
      */
     public void reset() {
-        setStep(0);
-        fishes.clear();
+        step = 0;
+        actors.clear();
         populate();
 
-        getSimView().showStatus(getStep(), getOcean());
+        // Show the starting state in the view.
+        view.showStatus(step, ocean);
     }
 
     /**
-     * Randomly populate the ocean with tunas, sardines and sharks.
+     * Randomly populate the ocean with tunas and sardines.
      */
     private void populate() {
-        Random rand = new Random();
-        getOcean().clear();
+        Random rand = Randomizer.getRandom();
+        ocean.clear();
         for (int row = 0; row < ocean.getHeight(); row++) {
             for (int col = 0; col < ocean.getWidth(); col++) {
                 if (rand.nextDouble() <= TUNA_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Tuna tuna = new Tuna(true, ocean, location);
-                    fishes.add(tuna);
-                }/* else if (rand.nextDouble() <= SARDINE_CREATION_PROBABILITY) {
+                    actors.add(tuna);
+                } else if (rand.nextDouble() <= SARDINE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Sardine sardine = new Sardine(true, ocean, location);
-                    fishes.add(sardine);
-                }*/ else if (rand.nextDouble() <= SHARK_CREATION_PROBABILITY) {
+                    actors.add(sardine);
+                } else if (rand.nextDouble() <= SHARK_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Shark shark = new Shark(true, ocean, location);
-                    fishes.add(shark);
+                    actors.add(shark);
                 }
                 // else leave the location empty.
             }
         }
-    }
-
-    public List<Fish> getFishes() {
-        return fishes;
-    }
-
-    public void setFishes(List<Fish> fishes) {
-        this.fishes = fishes;
-    }
-
-    public Ocean getOcean() {
-        return ocean;
-    }
-
-    public void setOcean(Ocean ocean) {
-        this.ocean = ocean;
-    }
-
-    public int getStep() {
-        return step;
-    }
-
-    public void setStep(int step) {
-        this.step = step;
-    }
-
-    public SimulatorView getSimView() {
-        return simView;
-    }
-
-    public void setSimView(SimulatorView simView) {
-        this.simView = simView;
     }
 }
